@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  
+    <title>RubySource User Auth</title>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="Main_Header">
+      <h1>Welcome</h1>
+      <% unless session[:user_id] %>
+        <%= button_to "Log In", :login, :class => "myButton", :method => :get%>
+      
+      <%else%>
+      
+        <%= button_to "Home", :home, :class => "myButton", :method => :get%> <br/>
+        <%= button_to "Profile", :profile, :class => "myButton", :method => :get%> <br/>
+        <%= button_to "Settings", :setting, :class => "myButton", :method => :get%> <br/>
+        <%= button_to "Logout", :logout, :class => "myButton", :method => :get%> <br/>
+      
+      <%end%>
+    </div>
+    <% if flash[:color]== "valid" %>
+      <div class="valid_notice">
+        <p><%= flash[:notice]%></p>
+      </div>
+    <% elsif flash[:color]== "invalid"%>
+      <div class="invalid_notice">
+        <p><%=flash[:notice]%></p>
+      </div>
+    <%else%>
+      <div class="notice">
+        <p><%=flash[:notice]%></p>
+      </div>
+    <%end%>
+    
+    <div class="body">
+    <%= yield %>
+    </div>
+  </body>
+</html>
