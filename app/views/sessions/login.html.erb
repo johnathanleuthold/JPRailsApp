@@ -2,7 +2,7 @@
 
 <div class= "Sign_Form">
   <h1>Log in</h1>
-  
+  <!-- The form_tag performs a login_attempt when the Submit button is pressed.-->
   <%= form_tag(:action => 'login_attempt') do %>
       <p>
        </br> <%= text_field_tag 'username_or_email', nil, :class => 'inputs', :placeholder => 'Username or Email'%>
