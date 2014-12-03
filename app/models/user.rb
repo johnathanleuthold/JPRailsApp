@@ -1,3 +1,11 @@
+###########################################################################################################################
+#Author: Johnathan Leuthold
+#Date: 11-25-2014
+#Modifications: 12-1-2014 Chad Greene
+#Description: The User model inherits from ActiveRecord which facilitates the creation of the business object User, which
+#is essentially a class whose attributes are the columns derived from the plural database table 'users'. ActiveRecord
+#represents the persistence layer of the application.
+###########################################################################################################################
 #This model captures an individual 'User' object from the users table.
 class User < ActiveRecord::Base
 
@@ -14,8 +22,10 @@ class User < ActiveRecord::Base
   validates :password, :confirmation => true
   validates_length_of :password, :in => 6..35, :on => :create
   validates :password_confirmation, :presence => true, :on => :create
-
+  
+  ###########################################################################################################################
   #authenticate method attempts to retrieve a specific user (their ID) from the database by the email or username.
+  ###########################################################################################################################
   def self.authenticate(username_or_email="", login_password="")
     if  EMAIL_REGEX.match(username_or_email)
       #The find_by_"column name" are defined under ActiveRecord, User model has access because it inherits from ActiveRecord.
@@ -30,21 +40,30 @@ class User < ActiveRecord::Base
       return false
     end
   end
+  
+  ###########################################################################################################################
   #The match_password function receives the user's login password, encrypts it with the salt and returns true if
   #what is in the database column password matches what the user submitted after hashing.
+  ###########################################################################################################################
   def match_password(login_password="")
      self.password == BCrypt::Engine.hash_secret(login_password, self.salt)
   end
+  
+  ###########################################################################################################################
   #encrypt_password uses BCrypt to generate an encrypted salt, then hashes it together with the user's plain-text password
   #and that becomes the new value stored in the database, since encrypt_password is called before every new User.save call.
+  ###########################################################################################################################
   def encrypt_password
     unless self.password.blank?
        self.salt = BCrypt::Engine.generate_salt
        self.password = BCrypt::Engine.hash_secret(self.password, self.salt)
     end
   end
+  
+  ###########################################################################################################################
   #This sets the current User's password to nil, and is called by the after_save callback, this does not affect the database.
   #Instead, this clears the current user instance's password so there is no plain text password floating around anymore.
+  ###########################################################################################################################
   def clear_password
     self.password = nil
   end
