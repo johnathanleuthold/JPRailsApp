@@ -1,15 +1,8 @@
 <% @page_title = "UserAuth | Signup" %>
+<!-- User errors -->
+<%= render 'errors' %>
 
-<% if @user.errors.any? %>
-  <div class="error">
-    <% @user.errors.full_messages.each do |m| %>
-    <ul>
-      <li><%= m %></li>
-    </ul>
-    <% end %>
-  </div>
-<% end %>
-
+<!-- Signup form for new users -->
 <div class="Sign_Form">
   <h1>Sign Up</h1>
   <%= form_for @user do |f| %>
@@ -19,6 +12,6 @@
       <p> <%= f.text_field :lname, class:"inputs", :placeholder => "Last Name"%></p>
       <p> <%= f.password_field :password, class:"inputs", :placeholder => "Password"%></p>
       <p> <%= f.password_field :password_confirmation, class:"inputs", :placeholder => "Re-Enter Password"%> </p>
-      <%= f.submit :Signup, class:"myButton"%>
+      <%= f.submit :Signup, class:"myButton" %>
   <% end %>
 </div>

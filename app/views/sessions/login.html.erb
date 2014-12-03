@@ -1,6 +1,6 @@
 <% @page_title = "UserAuth | Login" -%>
-<%= button_to "Sign Up", :signup, :class => "myButton", :method => :get%> 
-<div class= "Sign_Form">
+<!-- Button for signup -->
+ <div class= "Sign_Form">
   <h1>Log in</h1>
   <%= form_tag(:action => 'login_attempt') do %>
       <p>
@@ -12,3 +12,4 @@
       <%= submit_tag("Log In") %>
   <% end %>
 </div>
+<%= button_to "Sign Up", :signup, :class => "myButton", :method => :get%>
