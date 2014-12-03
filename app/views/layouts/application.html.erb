@@ -11,7 +11,14 @@
     <div class="Main_Header">
       <h1>Welcome</h1>
       <% unless session[:user_id] %>
-        <%= button_to "Log In", :login, :class => "myButton", :method => :get%>
+        <% if !(params[:controller] == 'users'  && params[:action] == 'new') %>
+          <p>
+            <%= button_to "Sign Up?", :signup, :class => "myButton", :method => :get%>
+          </p>
+        <% end %>
+        <p>
+            <%= button_to "Log In", :login, :class => "myButton", :method => :get%>
+        </p>
       
       <%else%>
       
@@ -36,8 +43,6 @@
       </div>
     <%end%>
     
-    <!--div class="body" -->
     <%= yield %>
-    <!-- /div-- >
   </body>
 </html>
