@@ -2,6 +2,7 @@
 class UsersController < ApplicationController
 #Creates a new user and places it in the @user class variable.
   def new
+     @page_title = "UserAuth | Signup"
     @user = User.new
   end
 #create saves a new user to the database (unless validation fails or information is missing) and returns
@@ -10,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash.now.alert = "Sign up successful"
-      redirect_to login_path
+      redirect_to sessions_login_attempt_path(@user.username, @user.password_confirmation)
     else
       render "new"
     end

@@ -4,13 +4,13 @@ Rails.application.routes.draw do
   get ':controller(/:action(/:id))(.:format)'
   root :to => 'sessions#login'
   # get 'user/new'
-  get '/users/new',  to: 'users#new', as: 'signup'
+  #get '/users/new',  to: 'users#new', as: 'signup'
   get '/sessions/login', to: 'sessions#login', as: 'login'
   get 'sessions/home', to: 'sessions#home', as: 'home'
   get 'sessions/profile', to: 'sessions#profile', as: 'profile'
   get 'sessions/setting', to: 'sessions#setting', as: 'setting'
   get 'sessions/logout', to: 'sessions#logout', as: 'logout'
-  post 'users/create' => 'users', action: 'create'
+  #post 'users/create' => 'users', action: 'create'
   post '/sessions/login_attempt' => 'sessions', action: 'login_attempt'
   
   

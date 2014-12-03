@@ -1,48 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  
-    <title>RubySource User Auth</title>
-    <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
-    <%= csrf_meta_tags %>
-  </head>
+  <%= render 'layouts/imports'  %>
+  <%= render 'layouts/header' %>
   <body>
-    <div class="Main_Header">
-      <h1>Welcome</h1>
-      <% unless session[:user_id] %>
-        <% if !(params[:controller] == 'users'  && params[:action] == 'new') %>
-          <p>
-            <%= button_to "Sign Up?", :signup, :class => "myButton", :method => :get%>
-          </p>
-        <% end %>
-        <p>
-            <%= button_to "Log In", :login, :class => "myButton", :method => :get%>
-        </p>
-      
-      <%else%>
-      
-        <%= button_to "Home", :home, :class => "myButton", :method => :get%> <br/>
-        <%= button_to "Profile", :profile, :class => "myButton", :method => :get%> <br/>
-        <%= button_to "Settings", :setting, :class => "myButton", :method => :get%> <br/>
-        <%= button_to "Logout", :logout, :class => "myButton", :method => :get%> <br/>
-      
-      <%end%>
+    <%= render 'layouts/flash'  %>
+    <div class="container">
+      <%= yield %>
     </div>
-    <% if flash[:color]== "valid" %>
-      <div class="valid_notice">
-        <p><%= flash[:notice]%></p>
-      </div>
-    <% elsif flash[:color]== "invalid"%>
-      <div class="invalid_notice">
-        <p><%=flash[:notice]%></p>
-      </div>
-    <%else%>
-      <div class="notice">
-        <p><%=flash[:notice]%></p>
-      </div>
-    <%end%>
-    
-    <%= yield %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

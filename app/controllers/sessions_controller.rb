@@ -24,8 +24,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Welcome #{authorized_user.username}"
       redirect_to(:action => 'home')
     else
-      flash[:notice] = "Invalid Username or Password"
-      flash[:color]= "invalid"
+      flash.now[:notice] = "Invalid Username or Password"
       render "login"
     end
   end
