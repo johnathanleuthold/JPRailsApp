@@ -7,6 +7,9 @@
 
 #Sessions controller for managing persistent user information (user database ID and username)
 class SessionsController < ApplicationController
+  #before_filter is a callback that performs the method immediately following the callback name in the conditions
+  #specified, for these two, except means not to fire authenticate_user if those are the methods in the [] that fired.
+  #only causes save_login_state to fire only when the methods in [] are fired.
   before_filter :authenticate_user, :except => [:index, :login, :login_attempt, :logout]
   before_filter :save_login_state, :only => [:index, :login, :login_attempt]
   
