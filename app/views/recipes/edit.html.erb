@@ -1,0 +1,11 @@
+<div class="recipes">
+    <%= form_for ([@user, @recipe]) do |f| %>
+        <p>
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </p>
+        <p>
+          <%= f.submit 'Change Name' %>
+        </p>
+    <% end %>
+</div>

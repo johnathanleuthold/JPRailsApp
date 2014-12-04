@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
     if authorized_user
       session[:user_id] = authorized_user.id
       flash[:notice] = "Welcome #{authorized_user.username}"
-      redirect_to(:action => 'home')
+      redirect_to user_path(session[:user_id])
     else
       flash.now[:notice] = "Invalid Username or Password"
       #Render login regenerates the login view in the current page.

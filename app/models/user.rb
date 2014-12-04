@@ -8,7 +8,9 @@
 ###########################################################################################################################
 #This model captures an individual 'User' object from the users table.
 class User < ActiveRecord::Base
-
+  
+  has_many :recipes
+  
   #These are callbacks, they exist for ActiveRecord derivations to inject methods between database actions.
   #I wrote these ones to make function calls to encrypt the password before saving, and to clear the (plain text) password.
   before_save :encrypt_password

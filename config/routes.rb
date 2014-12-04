@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :users
+
+  resources :users do
+    resources :recipes
+  end
   
   get ':controller(/:action(/:id))(.:format)'
   root :to => 'sessions#login'

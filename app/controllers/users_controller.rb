@@ -9,6 +9,8 @@
 
 #User controller class for user creation.
 class UsersController < ApplicationController
+  
+  
   ###########################################################################################################################
   #Creates a new user and places it in the @user class variable.
   ###########################################################################################################################
@@ -35,6 +37,35 @@ class UsersController < ApplicationController
       #necessary, instead a render serves the purpose of displaying the page again with new form errors where appropriate.
       render "new"
     end
+  end
+  
+  def show
+    @user = User.find(params[:id])
+  end
+  
+  def index
+    @user = User.find(params[:id])
+    @users = User.all
+  end
+  
+  def edit
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    @user = User.find(params[:id])
+    
+    if(@user.update(user_params))
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+  
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to users_path
   end
   
   private

@@ -36,13 +36,12 @@ protected
   ###########################################################################################################################
   def save_login_state
     if session[:user_id]
-      redirect_to(:controller => 'sessions', :action => 'home')
+      @user = User.find session[:user_id]
+      redirect_to @user
       return false
     else
       return true
     end
   end
-
-  def index
-  end
+  
 end

@@ -1,0 +1,10 @@
+<p>
+    <strong>Name:</strong>
+    <%= recipe.name %>
+</p>
+
+<p class="itemLinks">
+    <%= link_to 'Edit', edit_user_recipe_path(recipe.user, recipe) %>
+    <%= link_to 'Delete', [recipe.user, recipe],
+                method: :delete, data: { confirm: "Are you sure?" } %>
+</p>

@@ -1,0 +1,5 @@
+<div class="recipes">
+    <h2>Recipes</h2>
+    <%= render @user.recipes %>
+    <%= link_to 'Add Recipe', new_user_recipe_path(@user), class: "myButton" %>
+</div>

@@ -17,7 +17,7 @@
 
 <!-- Show user links (after login) -->
 <%else%>
-  <%= link_to "Home", :home, :class => "myButton nav", :method => :get %>
+  <%= link_to "Home", @current_user, :class => "myButton nav" %>
   <%= link_to "Profile", :profile, :class => "myButton nav", :method => :get %>
   <%= link_to "Settings", :setting, :class => "myButton nav", :method => :get %>
   <%= link_to "Logout", :logout, :class => "myButton nav", :method => :get %>
