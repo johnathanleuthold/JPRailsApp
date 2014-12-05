@@ -1,0 +1,23 @@
+<div class="form">
+<%= form_for [@user, @recipe, @recipe_ingredient] do |f| %>
+  <p>
+    <%= f.label :quantity %>
+    <%= f.number_field :quantity, class: 'text_field', step: 'any' %>
+  </p>
+  <p>
+    <%= f.label :measurement %>
+    <%= f.select :measurement_id, options_for_select(@measurements.map{|m| [m.name, m.id]}, :selected => @recipe_ingredient.measurement_id) %>
+  </p>
+  <p>
+    <%= f.label :ingredient %>
+    <%= f.select :ingredient_id, options_for_select(@ingredients.map{|i| [i.name,i.id]}, :selected => @recipe_ingredient.ingredient_id ) %>
+  </p>
+  <p>
+    <%= f.label :text %>
+    <%= f.text_field :text %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+</div>

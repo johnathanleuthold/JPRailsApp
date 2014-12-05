@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
+
+  resources :ingredients
+  resources :measurements
+  
   resources :users do
-    resources :recipes
+    resources :recipes do
+      resources :recipe_ingredients
+    end
   end
   
   get ':controller(/:action(/:id))(.:format)'

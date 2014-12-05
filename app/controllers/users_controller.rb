@@ -40,11 +40,12 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    get_user
   end
   
   def index
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
     @users = User.all
   end
   
@@ -76,4 +77,9 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :password, :fname, :lname, :salt, :email, :password_confirmation)
     end
+    
+    def get_user
+      @user = User.find(params[:id])
+    end
+    
 end

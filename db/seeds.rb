@@ -5,3 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+ingredients = Ingredient.create([{name: 'Butter'},
+                                 {name: 'Flour'},
+                                 {name: 'Sugar'},
+                                 {name: 'Brown Sugar'},
+                                 {name: 'Eggs'},
+                                 {name: 'Vanilla'},
+                                 {name: 'Baking Soda'},
+                                 {name: 'Salt'},
+                                 {name: 'Chocolate Chips'}])
+
+measurements = Measurement.create([{name: 'Cup', abbr: 'C'},
+                                   {name: 'Teaspoon', abbr: 't'},
+                                   {name: 'Tablespoon', abbr: 'T'},
+                                   {name: 'Pound', abbr: 'lb'}])

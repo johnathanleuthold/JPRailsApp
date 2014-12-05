@@ -1,6 +1,6 @@
 <p>
     <strong>Name:</strong>
-    <%= recipe.name %>
+    <%= link_to recipe.name, user_recipe_path(recipe.user, recipe), class: "recipe_entry" %>
 </p>
 
 <p class="itemLinks">

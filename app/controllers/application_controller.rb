@@ -11,6 +11,8 @@
 class ApplicationController < ActionController::Base
 protect_from_forgery
 protected
+include SessionsHelper
+before_action :logged_in, except: [:new, :create, :login, :logout, :login_attempt]
 
   ###########################################################################################################################
   #This method is triggered if the user uses triggers any of these methods but these :index, :login, :login_attempt, 
@@ -43,5 +45,13 @@ protected
       return true
     end
   end
-  
+
+  private
+    def logged_in
+      if(!session[:user_id])
+        flash.alert = "You must be logged in to access this content"
+        redirect_to login_path
+      end
+    end
+
 end

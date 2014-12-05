@@ -7,8 +7,11 @@ class RecipesController < ApplicationController
   
   def create
     @user = User.find(params[:user_id])
-    @recipe = @user.recipes.create(recipe_params)
-    redirect_to user_path(@user)
+    if @recipe = @user.recipes.create(recipe_params)
+      redirect_to user_path(@user)
+    else
+      render 'new'
+    end
   end
   
   def destroy
@@ -33,6 +36,17 @@ class RecipesController < ApplicationController
       flash.now.alert = "Error"
       render 'edit'
     end
+  end
+  
+  def index
+    @user = User.find(params[:user_id])
+    @recipes = @user.recipes.find.all#(params[:user_id])
+  end
+  
+  def show
+    @user = User.find(params[:user_id])
+    @recipe = @user.recipes.find(params[:id])
+    set_recipe(params[:id])
   end
   
 ###################################################################################  
