@@ -20,3 +20,15 @@ measurements = Measurement.create([{name: 'Cup', abbr: 'C'},
                                    {name: 'Teaspoon', abbr: 't'},
                                    {name: 'Tablespoon', abbr: 'T'},
                                    {name: 'Pound', abbr: 'lb'}])
+tester = User.create([{username: 'Test1', email: 'test@1.com', fname: 'Test', lname: '1', password: 'peanut', password_confirmation: 'peanut'},
+                     {username: 'Test2', email: 'test@2.com', fname: 'Test', lname: '2', password: 'peanut', password_confirmation: 'peanut'}] )
+
+
+
+
+
+
+
+
+
+

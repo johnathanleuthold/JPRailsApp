@@ -19,6 +19,9 @@
 <%else%>
   <%= link_to "Home", user_path(session[:user_id]), :class => "myButton nav" %>
   <%= link_to "Profile", :profile, :class => "myButton nav", :method => :get %>
-  <%= link_to "Settings", :setting, :class => "myButton nav", :method => :get %>
-  <%= link_to "Logout", :logout, :class => "myButton nav", :method => :get %>
+  <%= link_to "Settings", :setting, :class => "myButton nav", method: :get %>
+  <%= link_to "All Recipes", recipes_path, class: "myButton nav" %>
+  <%= link_to "All Users", users_path, class: "myButton nav" %>
+  
+  <%= link_to "Logout", logout_path, class: "myButton nav" %>
 <%end%>

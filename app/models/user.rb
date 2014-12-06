@@ -9,7 +9,8 @@
 #This model captures an individual 'User' object from the users table.
 class User < ActiveRecord::Base
   
-  has_many :recipes
+  has_many :recipes, dependent: :destroy
+  has_many :comments
   
   #These are callbacks, they exist for ActiveRecord derivations to inject methods between database actions.
   #I wrote these ones to make function calls to encrypt the password before saving, and to clear the (plain text) password.
@@ -21,8 +22,7 @@ class User < ActiveRecord::Base
   EMAIL_REGEX = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/i
   validates :username, :presence => true, :uniqueness => true, :length => { :in => 3..25 }
   validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
-  validates :password, :confirmation => true
-  validates_length_of :password, :in => 6..35, :on => :create
+  validates :password, :confirmation => true, :length => { :in => 6..35 }, on: [:create]
   validates :password_confirmation, :presence => true, :on => :create
   
   ###########################################################################################################################

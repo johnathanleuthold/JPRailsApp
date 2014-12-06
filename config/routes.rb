@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
 
-
   resources :ingredients
   resources :measurements
+  resources :recipes, only: [:index]
+  resources :comments, only: [:index]
   
   resources :users do
-    resources :recipes do
+    resources :recipes, except: [:index] do
       resources :recipe_ingredients
+      resources :comments
     end
   end
   
-  get ':controller(/:action(/:id))(.:format)'
+  #get ':controller(/:action(/:id))(.:format)'
   root :to => 'sessions#login'
   # get 'user/new'
   #get '/users/new',  to: 'users#new', as: 'signup'

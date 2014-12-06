@@ -1,0 +1,7 @@
+<div class="comment">
+    <strong><%= link_to comment.user.username, @user %> says:</strong> |  
+    <%= comment.text %>
+    <% if comment.user_id == session[:user_id] %>
+    <%= link_to 'Edit', edit_user_recipe_comment_path(@user, @recipe, comment)  %>
+    <% end %>
+</div>

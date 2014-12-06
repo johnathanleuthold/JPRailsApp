@@ -45,6 +45,10 @@ before_action :logged_in, except: [:new, :create, :login, :logout, :login_attemp
       return true
     end
   end
+  
+  def current_user
+      @_current_user ||= session[:user_id] && User.find(session[:user_id])
+    end
 
   private
     def logged_in
@@ -53,5 +57,7 @@ before_action :logged_in, except: [:new, :create, :login, :logout, :login_attemp
         redirect_to login_path
       end
     end
+    
+    
 
 end

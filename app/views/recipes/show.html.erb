@@ -11,5 +11,11 @@
     </tr>
     <%= render @recipe.recipe_ingredients %>
   </table>
-  <%= link_to 'Add Ingredient', new_user_recipe_recipe_ingredient_path(@user, @recipe.id), class: "myButton" %>
+  <% if @recipe.user_id == session[:user_id] %>
+    <%= link_to 'Add Ingredient', new_user_recipe_recipe_ingredient_path(@user, @recipe.id), class: "myButton" %>
+  <% end %>
+</div>
+<div class="comments">
+  <%=render @recipe.comments %>
+  <%= link_to 'Add Comment', new_user_recipe_comment_path(@user, @recipe.id), class: "myButton" %>
 </div>

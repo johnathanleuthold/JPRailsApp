@@ -1,20 +1,15 @@
 class RecipeIngredientsController < ApplicationController
   
   def new
-    @user = User.find(session[:user_id])
-    @recipe = @user.recipes.find(session[:recipe_id])
+    init
     @recipe_ingredient = @recipe.recipe_ingredients.new
     @ingredients = Ingredient.all
     @measurements = Measurement.all
   end
   
   def create
-    @user = User.find(session[:user_id])
-    @recipe = @user.recipes.find(session[:recipe_id])
+    init
     if @recipe_ingredient = @recipe.recipe_ingredients.create(ri_params)
-    #@ingredient = Ingredient.find(params[:ingredient_id])
-    #@measurement = Measurement.find(params[:measurement_id])
-    
       flash.alert = "Saved"
       redirect_to [@user, @recipe]
     else
@@ -24,8 +19,6 @@ class RecipeIngredientsController < ApplicationController
   end
   
   def edit
-    #@user = User.find(session[:user_id])
-    #@recipe = @user.recipes.find(session[:recipe_id])
     init
     @recipe_ingredient = @recipe.recipe_ingredients.find(params[:id])
     @ingredients = Ingredient.all
@@ -33,8 +26,7 @@ class RecipeIngredientsController < ApplicationController
   end
   
   def update
-    @user = User.find(session[:user_id])
-    @recipe = @user.recipes.find(session[:recipe_id])
+    init
     @recipe_ingredient = @recipe.recipe_ingredients.find(params[:id])
     if(@recipe_ingredient.update(ri_params))
       flash.alert = "Record Updated"
@@ -62,8 +54,7 @@ class RecipeIngredientsController < ApplicationController
   end
 =end  
   def destroy
-    @user = User.find(params[:user_id])
-    @recipe = @user.recipes.find(params[:recipe_id])
+    init
     @recipe_ingredient = @recipe.recipe_ingredients.find(params[:id])
     @recipe_ingredient.destroy
     flash.alert = "Ingredient Removed"

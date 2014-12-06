@@ -39,14 +39,14 @@ class RecipesController < ApplicationController
   end
   
   def index
-    @user = User.find(params[:user_id])
-    @recipes = @user.recipes.find.all#(params[:user_id])
+    #@user = User.find(session[:user_id])
+    @recipes = Recipe.all
   end
   
   def show
     @user = User.find(params[:user_id])
     @recipe = @user.recipes.find(params[:id])
-    set_recipe(params[:id])
+    session[:recipe_id] = @recipe.id
   end
   
 ###################################################################################  

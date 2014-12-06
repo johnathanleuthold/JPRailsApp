@@ -1,10 +1,12 @@
 <p>
-    <strong>Name:</strong>
+    <strong><%= "#{recipe.user.username}: " %></strong>
     <%= link_to recipe.name, user_recipe_path(recipe.user, recipe), class: "recipe_entry" %>
 </p>
 
 <p class="itemLinks">
-    <%= link_to 'Edit', edit_user_recipe_path(recipe.user, recipe) %>
-    <%= link_to 'Delete', [recipe.user, recipe],
-                method: :delete, data: { confirm: "Are you sure?" } %>
+    <% if recipe.user_id == session[:user_id] %>
+        <%= link_to 'Edit', edit_user_recipe_path(recipe.user, recipe) %>
+        <%= link_to 'Delete', [recipe.user, recipe],
+                    method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
 </p>

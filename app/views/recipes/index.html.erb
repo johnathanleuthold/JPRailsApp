@@ -1,1 +1,4 @@
-<H1>index.html.erb - MT</H1>
+<%= render @recipes %>
+<p>
+  <%= link_to 'Add Recipe', new_user_recipe_path(session[:user_id]), class: "myButton" %>
+</p>
