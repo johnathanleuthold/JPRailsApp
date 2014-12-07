@@ -7,10 +7,12 @@
   <p>
     <%= f.label :measurement %>
     <%= f.select :measurement_id, options_for_select(@measurements.map{|m| [m.name, m.id]}, :selected => @recipe_ingredient.measurement_id) %>
+    <%= link_to 'new', new_measurement_path %>
   </p>
   <p>
     <%= f.label :ingredient %>
     <%= f.select :ingredient_id, options_for_select(@ingredients.map{|i| [i.name,i.id]}, :selected => @recipe_ingredient.ingredient_id ) %>
+    <%= link_to 'new', new_ingredient_path %>
   </p>
   <p>
     <%= f.label :text %>
