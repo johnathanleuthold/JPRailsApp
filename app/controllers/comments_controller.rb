@@ -1,13 +1,11 @@
 class CommentsController < ApplicationController
   def new
-    @user = User.find(params[:user_id])
-    @recipe = Recipe.find(params[:recipe_id])
+    page_init
     @comment = @recipe.comments.new
   end
 
   def create
-    @user = User.find(params[:user_id])
-    @recipe = Recipe.find(params[:recipe_id])
+    page_init
     @comment = @recipe.comments.new(comment_params)
     @comment.user_id = current_user.id
     if(@comment.save)
@@ -33,13 +31,11 @@ class CommentsController < ApplicationController
   end
   
   def index
-   #@user = User.find(params[:user_id])
    @comments = Comment.all
   end
 
   def show
-    @user = User.find(params[:user_id])
-    @recipe = Recipe.find(params[:recipe_id])
+    page_init
     @comment = @recipe.comments.find(params[:id])
   end
   
@@ -53,7 +49,7 @@ class CommentsController < ApplicationController
     
     def page_init
       @user = User.find(params[:user_id])
-      @recipe = @user.recipes.find(params[:recipe_id])
+      @recipe = Recipe.find(params[:recipe_id])
     end
     
     def find_comment

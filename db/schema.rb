@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206021205) do
+ActiveRecord::Schema.define(version: 20141207013713) do
 
   create_table "comments", force: true do |t|
     t.string   "text"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(version: 20141206021205) do
 
   add_index "comments", ["recipe_id"], name: "index_comments_on_recipe_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "follows", force: true do |t|
+    t.integer  "follower_id"
+    t.integer  "followed_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "follows", ["followed_id"], name: "index_follows_on_followed_id"
+  add_index "follows", ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
+  add_index "follows", ["follower_id"], name: "index_follows_on_follower_id"
 
   create_table "ingredients", force: true do |t|
     t.string   "name"
@@ -36,6 +47,17 @@ ActiveRecord::Schema.define(version: 20141206021205) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "ratings", force: true do |t|
+    t.integer  "vote"
+    t.integer  "user_id"
+    t.integer  "recipe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ratings", ["recipe_id"], name: "index_ratings_on_recipe_id"
+  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
 
   create_table "recipe_ingredients", force: true do |t|
     t.float    "quantity"
@@ -56,6 +78,7 @@ ActiveRecord::Schema.define(version: 20141206021205) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.float    "rating"
   end
 
   add_index "recipes", ["user_id"], name: "index_recipes_on_user_id"

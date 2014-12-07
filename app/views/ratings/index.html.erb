@@ -1,0 +1,14 @@
+<table>
+<tr>
+  <th>User</th>
+  <th>Recipe</th>
+  <th>Vote</th>
+</tr>
+  <% @ratings.each do |r| %>
+    <tr>
+      <td><%= r.user.username %></td>
+      <td><%= r.recipe.name %></td>
+      <td><%= r.vote %></td>
+    </tr>
+  <% end %>
+</table>

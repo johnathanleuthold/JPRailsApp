@@ -3,27 +3,29 @@ Rails.application.routes.draw do
   resources :ingredients
   resources :measurements
   resources :recipes, only: [:index]
-  resources :comments, only: [:index]
+  resources :ratings, only: [:index]
+  resources :follows, only: [:create, :destroy]
   
   resources :users do
+    member do
+      get :following, :followers
+    end
     resources :recipes, except: [:index] do
       resources :recipe_ingredients
       resources :comments
+      resources :ratings
     end
   end
   
-  #get ':controller(/:action(/:id))(.:format)'
-  root :to => 'sessions#login'
-  # get 'user/new'
-  #get '/users/new',  to: 'users#new', as: 'signup'
+  
   get '/sessions/login', to: 'sessions#login', as: 'login'
   get 'sessions/home', to: 'sessions#home', as: 'home'
   get 'sessions/profile', to: 'sessions#profile', as: 'profile'
   get 'sessions/setting', to: 'sessions#setting', as: 'setting'
   get 'sessions/logout', to: 'sessions#logout', as: 'logout'
-  #post 'users/create' => 'users', action: 'create'
   post '/sessions/login_attempt' => 'sessions', action: 'login_attempt'
   
+  root :to => 'sessions#login'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -15,7 +15,17 @@
     <%= link_to 'Add Ingredient', new_user_recipe_recipe_ingredient_path(@user, @recipe.id), class: "myButton" %>
   <% end %>
 </div>
+<br />
 <div class="comments">
-  <%=render @recipe.comments %>
+  <%= render @recipe.comments %>
   <%= link_to 'Add Comment', new_user_recipe_comment_path(@user, @recipe.id), class: "myButton" %>
+</div>
+<br />
+<div class="rating">
+  <% if @rating.nil? %>
+    <%= link_to 'Add Rating', new_user_recipe_rating_path(@user, @recipe), class: "myButton" %>
+  <% else %>
+    <%= "Current rating is: #{@rating.vote}" %>
+    <%= link_to 'Edit Rating', edit_user_recipe_rating_path(@user, @recipe, @rating) %>
+  <% end %>
 </div>

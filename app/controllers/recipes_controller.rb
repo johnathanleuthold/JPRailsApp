@@ -39,7 +39,6 @@ class RecipesController < ApplicationController
   end
   
   def index
-    #@user = User.find(session[:user_id])
     @recipes = Recipe.all
   end
   
@@ -47,6 +46,7 @@ class RecipesController < ApplicationController
     @user = User.find(params[:user_id])
     @recipe = @user.recipes.find(params[:id])
     session[:recipe_id] = @recipe.id
+    @rating = @recipe.ratings.find_by(:user_id => session[:user_id])
   end
   
 ###################################################################################  

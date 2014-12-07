@@ -11,6 +11,15 @@ class User < ActiveRecord::Base
   
   has_many :recipes, dependent: :destroy
   has_many :comments
+  has_many :ratings
+  has_many :active_follows, class_name: "Follow",
+                            foreign_key: "follower_id",
+                            dependent: :destroy
+  has_many :passive_follows, class_name: "Follow",
+                             foreign_key: "followed_id",
+                             dependent: :destroy
+  has_many :following, through: :active_follows, source: :followed
+  has_many :followers, through: :passive_follows, source: :follower
   
   #These are callbacks, they exist for ActiveRecord derivations to inject methods between database actions.
   #I wrote these ones to make function calls to encrypt the password before saving, and to clear the (plain text) password.

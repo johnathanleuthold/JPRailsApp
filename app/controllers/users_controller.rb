@@ -67,6 +67,18 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
   
+  def follow(other_user)
+    active_follows.create(followed_id: other_user.id)
+  end
+  
+  def unfollow(other_user)
+    active.follows.create(followed_id: other_user.id)
+  end
+  
+  def following?(other_user)
+    following.include?(other_user)
+  end
+  
   private
     ###########################################################################################################################
     #This private function defines the parameter list for the User.new so as to help obfuscate that information as well as

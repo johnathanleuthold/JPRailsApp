@@ -1,12 +1,15 @@
 <p>
-    <strong><%= "#{recipe.user.username}: " %></strong>
-    <%= link_to recipe.name, user_recipe_path(recipe.user, recipe), class: "recipe_entry" %>
+  <strong><%= link_to recipe.user.username, user_path(recipe.user) %>: </strong>
+  <%= link_to recipe.name, user_recipe_path(recipe.user, recipe), class: "recipe_entry" %>
+  <p>
+      <%= "Average user rating: #{recipe.rating}" %>
+  </p>
 </p>
 
 <p class="itemLinks">
-    <% if recipe.user_id == session[:user_id] %>
-        <%= link_to 'Edit', edit_user_recipe_path(recipe.user, recipe) %>
-        <%= link_to 'Delete', [recipe.user, recipe],
-                    method: :delete, data: { confirm: "Are you sure?" } %>
-    <% end %>
+  <% if recipe.user_id == session[:user_id] %>
+    <%= link_to 'Edit', edit_user_recipe_path(recipe.user, recipe) %>
+    <%= link_to 'Delete', [recipe.user, recipe],
+                method: :delete, data: { confirm: "Are you sure?" } %>
+  <% end %>
 </p>
