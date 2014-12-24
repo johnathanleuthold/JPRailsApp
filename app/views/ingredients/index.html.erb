@@ -1,9 +1,6 @@
-<% @ingredients.each do |ing| %>
-    <p>
-        <%= ing.id %>
-        <%= ing.name %>
-        <%= link_to 'edit', edit_ingredient_path(ing) %>
-        <%= link_to 'delete', ingredient_path(ing), method: :delete, 
-                              data: { confirm: 'Are you sure?' } %>
-    </p>
-<% end %>
+<!--############################################################################
+  An automatic foreach loop is used to process the @ingredients instance
+  variable.  The ingredients are displayed by calling the show function
+  for each ingredient.
+#############################################################################-->
+<%= render @ingredients %>

@@ -1,0 +1,10 @@
+<!-- Used for both edits and new entries -->
+<%= form_for @rating do |f| %>
+<p>
+  <!-- Adds vote to page hash -->
+  <%= f.number_field :vote, placeholder: "Rate recipe" %>
+</p>
+<p>
+  <%= f.submit @btnText, class: "myButton" %>
+</p>
+<% end %>

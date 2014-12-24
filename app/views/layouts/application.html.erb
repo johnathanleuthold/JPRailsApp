@@ -1,12 +1,18 @@
 <!DOCTYPE html>
+<!-- Main template for all pages -->
 <html>
-  <%= render 'layouts/imports'  %>
-  <%= render 'layouts/header' %>
+    <!-- Head of document _head.html.erb -->
+  <%= render 'layouts/head' %>
   <body>
-    <%= render 'layouts/flash'  %>
+      <!-- Page header _header.html.erb -->
+    <%= render 'layouts/header' %>
     <div class="container">
+      <!-- Flash messages to user  -->
+      <%= render 'shared/flash' %>
+      <!-- Display content for request <page_request>.html.erb -->
       <%= yield %>
     </div>
+      <!-- Page footer _foother.html.erb -->
     <%= render 'layouts/footer' %>
   </body>
 </html>

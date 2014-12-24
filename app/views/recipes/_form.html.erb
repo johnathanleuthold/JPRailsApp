@@ -1,11 +1,14 @@
+<!-- Form for editing and new recipes -->
 <div class="recipe_entry">
-  <%= form_for [@user, @recipe] do |f| %>
+  <%= form_for @recipe do |f| %>
     <p>
+      <!-- Adds name to page hash -->
       <%= f.label :name %>
       <%= f.text_field :name %>
     </p>
     <p>
-      <%= f.submit %>
+      <!-- Creates/Updates user recipe -->
+      <%= f.submit @btnText, class: "myButton" %>
     </p>
   <% end %>
 </div>

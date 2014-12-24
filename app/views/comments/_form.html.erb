@@ -1,11 +1,13 @@
+<!-- Form used for both new and editing comments -->
 <div class="form">
-<%= form_for [@user, @recipe, @comment] do |f| %>
+<%= form_for @comment do |f| %>
   <p>
-    <%= 'Comment:' %>
-    <%= f.text_area :text %>
+    <!-- Adds comment text to page hash -->
+    <%= f.text_area :text, placeholder: "Comment" %>
   </p>
+  <!-- Creates/Updates comment -->
   <p>
-    <%= f.submit %>
+    <%= f.submit @btnText, class: "myButton" %>
   </p>
 <% end %>
 </div>

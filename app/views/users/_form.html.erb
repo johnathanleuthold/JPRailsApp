@@ -1,0 +1,39 @@
+<!-- Form for editing and new users -->
+<div class="user_form">
+  <%= form_for @user do |f| %>
+    <p>
+      <!-- Adds username to page hash -->
+      <%= f.text_field :username, class:"inputs", 
+            :placeholder => "Username" %> 
+    </p>
+    <p> 
+      <!-- Adds email to page hash -->
+      <%= f.text_field :email, class:"inputs", 
+            :placeholder => "Email" %> 
+    </p>
+    <p> 
+      <!-- Adds first name to page hash -->
+      <%= f.text_field :fname, class:"inputs", 
+            :placeholder => "First Name" %>
+    </p>
+    <p> 
+      <!-- Adds last name to page hash -->
+      <%= f.text_field :lname, class:"inputs", 
+            :placeholder => "Last Name" %>
+    </p>
+    <p> 
+      <!-- Adds password_hash to page hash -->
+      <%= f.password_field :password, class:"inputs", 
+            :placeholder => "Password" %>
+    </p>
+    <p> 
+      <!-- Adds pw_confirmation_hash to page hash -->
+      <%= f.password_field :password_confirmation, class:"inputs", 
+            :placeholder => "Re-Enter Password"%> 
+    </p>
+    <p>
+      <!-- Creates/Updates user object -->
+      <%= f.submit @btnText,  class:"myButton" %>
+    </p>
+  <% end %>
+</div>

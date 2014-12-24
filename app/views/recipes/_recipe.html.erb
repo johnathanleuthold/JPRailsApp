@@ -1,15 +1,10 @@
+<!--############################################################################
+# Displays a single recipe link with average user rating.
+#############################################################################-->
 <p>
-  <strong><%= link_to recipe.user.username, user_path(recipe.user) %>: </strong>
-  <%= link_to recipe.name, user_recipe_path(recipe.user, recipe), class: "recipe_entry" %>
-  <p>
-      <%= "Average user rating: #{recipe.rating}" %>
-  </p>
+  <%= recipe.user.username %>
+  <%= link_to recipe.name, recipe, class: "recipe_entry" %>
+  <%= "Average user rating: #{recipe.rating}" %>
 </p>
-
-<p class="itemLinks">
-  <% if recipe.user_id == session[:user_id] %>
-    <%= link_to 'Edit', edit_user_recipe_path(recipe.user, recipe) %>
-    <%= link_to 'Delete', [recipe.user, recipe],
-                method: :delete, data: { confirm: "Are you sure?" } %>
-  <% end %>
-</p>
+<!-- Show modificaiton links -->
+<%= render 'shared/mod_links', object: recipe %>

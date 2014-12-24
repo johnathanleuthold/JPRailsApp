@@ -1,63 +1,72 @@
-###########################################################################################################################
+################################################################################
 #Author: Johnathan Leuthold
 #Date: 11-26-2014
-#Modifications: 
-#Description: The Application controller contains override methods to prevent inappropriate views from being displayed
-#to a user based on their current log in state. It does this from the sessions controller under its before_filter:
-#callbacks, these filters call a method in the ApplicationController if certain methods in the sessions controller fire
-#as a means of validating whether that method is appropriate.
-###########################################################################################################################
+#Modifications: 12-13-14(Chad Greene) 
+#Description: The Application controller contains override methods to prevent 
+#inappropriate views from being displayed to a user based on their current log 
+#in state. It does this from the sessions controller under its before_action:
+#callbacks, these filters call a method in the ApplicationController if certain 
+#methods in the sessions controller fire as a means of validating whether that 
+#method is appropriate.  The session helper is included for this purpose. Since
+#all controllers inherit the properties of the Application controller, the 
+#methods current_user and current_recipe can be used on all views to control
+#view based logic.
+################################################################################
 
 class ApplicationController < ActionController::Base
-protect_from_forgery
-protected
+  #protect from CRSF attacks
+protect_from_forgery with: :exception
+  
+  # include Session logic
 include SessionsHelper
-before_action :logged_in, except: [:new, :create, :login, :logout, :login_attempt]
 
-  ###########################################################################################################################
-  #This method is triggered if the user uses triggers any of these methods but these :index, :login, :login_attempt, 
-  #and :logout. This method verifies that there is a session with a user_id in play, if not, it redirects the user to the
-  #login page. If there is a session, this method assigns @current_user the user corresponding to that sessions user_id.
-  ###########################################################################################################################
-  def authenticate_user
-    unless session[:user_id]
-      #If there's no user_id in the current session the user is redirected to the login page.
-      redirect_to(:controller => 'sessions', :action => 'login')
-      return false
-    else
-      #If there is a current user_id in the session @current_user will receive the User business object corresponding to
-      #that ID.
-      @current_user = User.find session[:user_id]
-      return true
-    end
-  end
+  # Sets ActionMailer::Base
+before_action :make_action_mailer_user_request_host_and_protocol
 
-  ###########################################################################################################################
-  #This method fires if the user tries to use the :index, :login, or :login_attempt methods in the sessions controller
-  #if there is a user_id in the current session the user is redirected to the home page.
-  ###########################################################################################################################
-  def save_login_state
-    if session[:user_id]
-      @user = User.find session[:user_id]
-      redirect_to @user
-      return false
-    else
-      return true
+  #ensures the user is logged in to access protected content
+before_action :logged_in_user, except: [:new, :create, :show]  
+  
+  ##############################################################################
+  # Saves the url request of a user that is not logged in.  Upon a successful
+  # login the user is directed to the saved page request.
+  #
+  # Entry: none
+  #
+  #  Exit: If user is logged out current request stored and user directed to
+  #        login page
+  ##############################################################################
+  def logged_in_user
+    unless logged_in?
+      store_location
+      flash.alert = "Please log in"
+      redirect_to login_url
     end
   end
   
-  def current_user
-      @_current_user ||= session[:user_id] && User.find(session[:user_id])
-    end
-
-  private
-    def logged_in
-      if(!session[:user_id])
-        flash.alert = "You must be logged in to access this content"
-        redirect_to login_path
-      end
-    end
+  ##############################################################################
+  # Callback for protected content.  Used for checking whether or not the
+  # logged in user is an administrator.
+  ##############################################################################
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
+  
+  ##############################################################################
+  # Sets all ActionMailers to use the same protocol and host that the processing
+  # page used. Email links are sent with the same protocol the page is rendered
+  # under.  i.e https rather than http when running ssl on app traffic. 
+  ##############################################################################
+  def make_action_mailer_user_request_host_and_protocol
+    ActionMailer::Base.default_url_options[:protocol] = request.protocol
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
+  
+  ##############################################################################
+  # Callback for controllers with @user object.  Used for checking whether or 
+  # not the logged in user owns an object or administrator within the views.
+  ##############################################################################
+  def correct_user(user)
+      redirect_to(root_url) unless (admin || current_user?(user))
+  end
     
-    
-
 end

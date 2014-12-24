@@ -1,6 +1,9 @@
+<!-- Adds follow button to page -->
 <%= form_for(current_user.active_follows.build) do |f| %>
   <div>
+    <!-- Adds user id to page hash -->
     <%= hidden_field_tag :followed_id, @user.id %>
   </div>
+  <!-- Follows user -->
   <%= f.submit "Follow", class: "myButton" %>
 <% end %>

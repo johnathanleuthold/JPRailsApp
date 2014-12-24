@@ -1,19 +1,14 @@
+<% provide(:title, @page_title) %>
+<!--############################################################################
+#  An automatic foreach loop is used to process the @measurements instance
+#  variable.  The measurements are displayed by calling the show function
+#  for each measurement.
+#############################################################################-->
 <table>
   <tr>
-    <th>ID</th>
     <th>Name</th>
     <th>Abbreviation</th>
+    <th>&nbsp</th>
   </tr>
-  <% @measurements.each do |msr| %>
-  <tr>
-    <td><%= msr.id %></td>
-    <td><%= msr.name %></td>
-    <td><%= msr.abbr %></td>
-    <td>
-      <%= link_to 'edit', edit_ingredient_path(msr) %>
-      <%= link_to 'delete', ingredient_path(msr), method: :delete, 
-                            data: { confirm: 'Are you sure?' } %>
-    </td>
-  </tr>
-  <% end %>
+  <%= render @measurements %>
 </table>

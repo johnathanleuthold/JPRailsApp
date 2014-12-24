@@ -1,5 +1,11 @@
+<% provide(:title, @page_title ) %>
+<!-- Shows a users recipes -->
 <div class="recipes">
     <h2>Recipes for <%= @user.username %></h2>
+    <!-- Displa all user recipes -->
     <%= render @user.recipes %>
-    <%= link_to 'Add Recipe', new_user_recipe_path(@user), class: "myButton" %>
+    <!-- Show un/follow buttons -->
+    <%= render 'follow_form' %>
+    <!-- Show add recipe button -->
+    <%= link_to 'Add Recipe', new_recipe_path, class: "myButton" %>
 </div>

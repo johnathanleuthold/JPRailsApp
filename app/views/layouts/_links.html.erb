@@ -1,27 +1,16 @@
-<!-- If user not logged in show signup/login buttons -->
-<% unless session[:user_id] %>
-
-  <!-- Remove signup button from signup page -->
-  <% if !(params[:controller] == 'users') %>
-    <p>
-      <%= link_to "Sign Up?", new_user_path, :class => "myButton" %>
-    </p>
-  <% end %>
-  
-  <!-- Remove login button from login page -->
-  <% if !(params[:controller] == 'sessions') %>
-    <p>
-      <%= link_to "Log In", login_path, :class => "myButton" %>
-    </p>
-  <% end %>
-
-<!-- Show user links (after login) -->
-<%else%>
-  <%= link_to "Home", user_path(session[:user_id]), :class => "myButton nav" %>
-  <%= link_to "Profile", :profile, :class => "myButton nav", :method => :get %>
-  <%= link_to "Settings", :setting, :class => "myButton nav", method: :get %>
-  <%= link_to "All Recipes", recipes_path, class: "myButton nav" %>
+<!-- User links for header, change based on login status -->
+<%= link_to 'Help', help_path, class: "myButton nav" %>
+<%= link_to 'About', about_path, class: "myButton nav" %>
+<%= link_to "All Recipes", recipes_path, class: "myButton nav" %>
+<br />
+<% if logged_in? %>
+    <!-- Show user links (after login) -->  
+  <%= link_to "Home", root_url, class: "myButton nav" %>
+  <%= link_to "My Recipes", current_user, class: "myButton nav" %>
+  <%= link_to "Settings", edit_user_path(current_user), class: "myButton nav" %>
   <%= link_to "All Users", users_path, class: "myButton nav" %>
-  
-  <%= link_to "Logout", logout_path, class: "myButton nav" %>
+  <%= link_to "Logout", logout_path, method: :delete, class: "myButton nav" %>
+<%else%>
+    <!-- If user not logged in show login button -->
+  <%= link_to "Log In", login_path, :class => "myButton" %>
 <%end%>

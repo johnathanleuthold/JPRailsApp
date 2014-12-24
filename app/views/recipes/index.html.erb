@@ -1,4 +1,7 @@
+<% provide(:title, @page_title) %>
+<!-- Displays All recipes -->
 <%= render @recipes %>
 <p>
-  <%= link_to 'Add Recipe', new_user_recipe_path(session[:user_id]), class: "myButton" %>
+  <!-- Provide link to add a recipe if user is logged in -->
+  <%= link_to 'Add Recipe', new_recipe_path, class: "myButton" if logged_in? %>
 </p>

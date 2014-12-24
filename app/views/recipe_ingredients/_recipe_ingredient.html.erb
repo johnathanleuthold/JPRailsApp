@@ -1,13 +1,10 @@
+<!-- Displays a sing recipe ingredient -->
 <tr>
   <td><%= recipe_ingredient.quantity %></td>
   <td><%= recipe_ingredient.measurement.abbr %></td>
   <td><%= recipe_ingredient.ingredient.name %></td>
   <td><%= recipe_ingredient.text %></td>
-  <td>
-    <%= link_to 'Edit', edit_user_recipe_recipe_ingredient_path(@user, @recipe, recipe_ingredient) %>
-    <!--edit_user_recipe_recipe_ingredient_path(recipe.user, recipe, recipe_ingredient) %-->
-    <%= link_to 'Delete', [@user, @recipe, recipe_ingredient],
-                method: :delete, data: { confirm: "Are you sure?" } %>
-    
-  </td>
+  
+  <!-- Show modificaiton links -->
+  <td><%= render 'shared/rmod_links', object: recipe_ingredient %></td>
 </tr>

@@ -1,7 +1,11 @@
+<!-- Shows information for a single comment-->
+
 <div class="comment">
-    <strong><%= link_to comment.user.username, user_path(comment.user) %> says:</strong> |  
+    <!-- Link on username to users profile -->
+    <strong><%= link_to comment.user.username, comment.user %> says:</strong> |  
+    <!-- The comment -->
     <%= comment.text %>
-    <% if comment.user_id == session[:user_id] %>
-    <%= link_to 'Edit', edit_user_recipe_comment_path(@user, @recipe, comment)  %>
-    <% end %>
+    
+    <!-- Show modificaiton links -->
+    <%= render 'shared/mod_links', object: comment %>
 </div>

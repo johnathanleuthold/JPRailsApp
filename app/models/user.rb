@@ -1,14 +1,16 @@
-###########################################################################################################################
+################################################################################
 #Author: Johnathan Leuthold
 #Date: 11-25-2014
 #Modifications: 12-1-2014 Chad Greene
-#Description: The User model inherits from ActiveRecord which facilitates the creation of the business object User, which
-#is essentially a class whose attributes are the columns derived from the plural database table 'users'. ActiveRecord
-#represents the persistence layer of the application.
-###########################################################################################################################
+#Description: The User model inherits from ActiveRecord which facilitates the 
+#creation of the business object User, which is essentially a class whose 
+#attributes are the columns derived from the plural database table 'users'. 
+#ActiveRecord represents the persistence layer of the application.
+################################################################################
 #This model captures an individual 'User' object from the users table.
 class User < ActiveRecord::Base
   
+    #Relationships
   has_many :recipes, dependent: :destroy
   has_many :comments
   has_many :ratings
@@ -18,65 +20,212 @@ class User < ActiveRecord::Base
   has_many :passive_follows, class_name: "Follow",
                              foreign_key: "followed_id",
                              dependent: :destroy
+  
   has_many :following, through: :active_follows, source: :followed
   has_many :followers, through: :passive_follows, source: :follower
   
-  #These are callbacks, they exist for ActiveRecord derivations to inject methods between database actions.
-  #I wrote these ones to make function calls to encrypt the password before saving, and to clear the (plain text) password.
-  before_save :encrypt_password
-  after_save :clear_password
+    #Accessible attributes outside of those permitted in controller
+  attr_accessor :remember_token, :activation_token, :reset_token
+  
+    #Tells model to use BCrypt to create password digest
+  has_secure_password
+  
+    #before action callbacks
+  before_save :downcase_email
+  before_create :create_activation_digest
 
-  #Defines a regular expression for emails, validates can be used on specific methods.
-  #No validations for Firstname and Lastname, because I don't know what to write for constraints.
-  EMAIL_REGEX = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\z/i
-  validates :username, :presence => true, :uniqueness => true, :length => { :in => 3..25 }
-  validates :email, :presence => true, :uniqueness => true, :format => EMAIL_REGEX
-  validates :password, :confirmation => true, :length => { :in => 6..35 }, on: [:create]
-  validates :password_confirmation, :presence => true, :on => :create
+    #Defines a regular expression for emails
+  EMAIL_REGEX = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Za-z]{2,20}\z/i
   
-  ###########################################################################################################################
-  #authenticate method attempts to retrieve a specific user (their ID) from the database by the email or username.
-  ###########################################################################################################################
-  def self.authenticate(username_or_email="", login_password="")
-    if  EMAIL_REGEX.match(username_or_email)
-      #The find_by_"column name" are defined under ActiveRecord, User model has access because it inherits from ActiveRecord.
-      user = User.find_by_email(username_or_email)
-    else
-      user = User.find_by_username(username_or_email)
+    #Validations
+  validates :username, presence: true, uniqueness: true, length: 3..25
+  validates :email, presence: true, uniqueness: true, format: EMAIL_REGEX
+  validates :password, confirmation: true, length: 6..35, on: [:create]
+  validates :password_confirmation, presence: true, on: [:create]
+  
+  ##############################################################################
+  # Opperation done within Users singleton
+  ##############################################################################
+  class << self
+    ############################################################################
+    # Same authentication algorithm that BCrypt uses to hash the password.  
+    # Function will be used to hash reset and activation tokens
+    #
+    # Entry: token needs encrypting
+    #
+    #  Exit: attribute digest stored in database
+    ############################################################################
+    def digest(string)
+      cost = ActiveModel::SecurePassword.min_cost ? 
+             BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+      BCrypt::Password.create(string, cost: cost)
     end
-
-    if user && user.match_password(login_password)
-      return user
-    else
-      return false
-    end
-  end
-  
-  ###########################################################################################################################
-  #The match_password function receives the user's login password, encrypts it with the salt and returns true if
-  #what is in the database column password matches what the user submitted after hashing.
-  ###########################################################################################################################
-  def match_password(login_password="")
-     self.password == BCrypt::Engine.hash_secret(login_password, self.salt)
-  end
-  
-  ###########################################################################################################################
-  #encrypt_password uses BCrypt to generate an encrypted salt, then hashes it together with the user's plain-text password
-  #and that becomes the new value stored in the database, since encrypt_password is called before every new User.save call.
-  ###########################################################################################################################
-  def encrypt_password
-    unless self.password.blank?
-       self.salt = BCrypt::Engine.generate_salt
-       self.password = BCrypt::Engine.hash_secret(self.password, self.salt)
+    
+    ############################################################################
+    # Creates a url safe base 64 token
+    #
+    # Entry: none
+    #
+    #  Exit: instance token generated
+    ############################################################################
+    def new_token
+      SecureRandom.urlsafe_base64
     end
   end
   
-  ###########################################################################################################################
-  #This sets the current User's password to nil, and is called by the after_save callback, this does not affect the database.
-  #Instead, this clears the current user instance's password so there is no plain text password floating around anymore.
-  ###########################################################################################################################
-  def clear_password
-    self.password = nil
+  ##############################################################################
+  # Sets up remember digest in database that signed cookies will use to 
+  # authenticate a remembered user
+  #
+  # Entry: none
+  #
+  #  Exit: remember digest set
+  ##############################################################################
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+  
+  ##############################################################################
+  # Forgets user credentials
+  #
+  # Entry: none
+  #
+  #  Exit: remember digest set to nil
+  ##############################################################################
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
+  
+  ##############################################################################
+  # Takes in an attribute to test and a token.  The attribute correspondes to a
+  # digest in the database.  The token should be a password for the hash.
+  #
+  # Entry: attribute is digest to look up
+  #        token is password for digest
+  #
+  #  Exit: returns true if token is a password for digest
+  ##############################################################################
+  def authenticated?(attribute, token)
+    digest = self.send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+  
+  ##############################################################################
+  # Activates a user account
+  #
+  # Entry: none
+  #
+  #  Exit: user account activated
+  ##############################################################################
+  def activate
+    update_attribute(:activated, true)
+  end
+  
+  ##############################################################################
+  # Sends an activation email to user
+  #
+  # Entry: none
+  #
+  #  Exit: Activation email sent to user
+  ##############################################################################
+  def send_activation_email
+    UserMailer.account_activation(self).deliver
+  end
+  
+  ##############################################################################
+  # Sets up a reset digest for a forgotten password
+  #
+  # Entry: none
+  #
+  #  Exit: reset digest set
+  ##############################################################################
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_columns(reset_digest: User.digest(reset_token),
+                   reset_sent_at: Time.zone.now)
+  end
+  
+  ##############################################################################
+  # Sends a password reset email to user
+  #
+  # Entry: none
+  #
+  #  Exit: Password reset email sent to user
+  ##############################################################################
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver
+  end
+  
+  ##############################################################################
+  # Allows a user to follow another user
+  #
+  # Entry: none
+  #
+  #  Exit: following user
+  ##############################################################################
+  def follow(other_user)
+    active_follows.create(followed_id: other_user.id)
+  end
+  
+  ##############################################################################
+  # Allows a user to unfollow a user they are currently following
+  #
+  # Entry: none
+  #
+  #  Exit: user unfollowed
+  ##############################################################################
+  def unfollow(other_user)
+    active_follows.find_by(followed_id: other_user.id).destroy
+  end
+  
+  ##############################################################################
+  # Determines if one user is following another
+  #
+  # Entry: other_user is a possible follow
+  #
+  #  Exit: returns true if user is following other_user
+  ##############################################################################
+  def following?(other_user)
+    following.include?(other_user)
+  end
+  
+  ##############################################################################
+  # Sets up the password reset link timer.  Expired links are not valid
+  #
+  # Entry: none
+  #
+  #  Exit: Password reset link timer set
+  ##############################################################################
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
+  end
+  
+#PRIVATE########################################################################
+private
+  
+  ##############################################################################
+  # Sets email to all lowercase 
+  #
+  # Entry: none
+  #
+  #  Exit: email lowercase
+  ##############################################################################
+  def downcase_email
+    self.email = email.downcase
+  end
+  
+  ##############################################################################
+  # Creates the user activation digest at registration
+  #
+  # Entry: none
+  #
+  #  Exit: activation digest set
+  ##############################################################################
+  def create_activation_digest
+    self.activation_token = User.new_token
+    self.activation_digest = User.digest(activation_token)
   end
 end
 

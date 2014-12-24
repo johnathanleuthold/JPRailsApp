@@ -1,5 +1,8 @@
-<% if session[:user_id] != user.id %>
+<!-- Determines whether to show follow or unfollow button. -->
+  <!-- Do not allow un/following self -->
+<% unless current_user?(@user) %>
   <div id="follow_form" >
+    <!-- If following show unfollow otherwise show follow -->
     <% if current_user.following?(@user) %>
       <%= render 'unfollow' %>
     <% else %>

@@ -1,6 +1,11 @@
-<h1>
-  <%= @recipe.name %>
-</h1>
+<% provide(:title, @page_title) %>
+<!--############################################################################
+# Displays information for an individual recipe.  Page contains all recipe
+# ingredients, comments, and an overall rating.
+#############################################################################-->
+<!-- Recipe name as header -->
+<h1><%= @recipe.name %></h1>
+<!-- Display recipe ingredients in table -->
 <div class="ingredients">
   <table>
     <tr>
@@ -11,21 +16,45 @@
     </tr>
     <%= render @recipe.recipe_ingredients %>
   </table>
-  <% if @recipe.user_id == session[:user_id] %>
-    <%= link_to 'Add Ingredient', new_user_recipe_recipe_ingredient_path(@user, @recipe.id), class: "myButton" %>
-  <% end %>
+    <!-- Provide link to add ingredient if user is owner of recipe -->
+    <%= link_to 'Add Ingredient', new_recipe_ingredient_path, 
+        class: "myButton" if current_user?(@recipe.user) %>
 </div>
 <br />
+ <!-- Display all checklist items -->
+ <div class="checklists">
+  <table>
+    <tr>
+      <th>Description</th>
+      <th>Order</th>
+    </tr>
+    <%= render @recipe.checklists %>
+  </table>
+  <%= link_to 'Add Checklist Item', new_checklist_path, 
+      class: "myButton" if current_user?(@recipe.user) %>
+  
+</div>
+<br />
+<!-- Display all recipe comments. Newest comments display first -->
 <div class="comments">
   <%= render @recipe.comments %>
-  <%= link_to 'Add Comment', new_user_recipe_comment_path(@user, @recipe.id), class: "myButton" %>
+  <!-- New comment button for logged in users -->
+  <%= link_to 'Add Comment', new_comment_path, 
+      class: "myButton" if logged_in? %>
 </div>
 <br />
+<!-- Allow logged in users to rate recipe -->
 <div class="rating">
-  <% if @rating.nil? %>
-    <%= link_to 'Add Rating', new_user_recipe_rating_path(@user, @recipe), class: "myButton" %>
-  <% else %>
-    <%= "Current rating is: #{@rating.vote}" %>
-    <%= link_to 'Edit Rating', edit_user_recipe_rating_path(@user, @recipe, @rating) %>
+  <% if logged_in? %>
+    <!-- If user has not rated recipe display add rating button -->
+    <% if @rating.nil? %>
+      <%= link_to 'Add Rating', new_rating_path, 
+          class: "myButton" %>
+    <!-- Otherwise show current rating and edit rating button -->
+    <% else %>
+      <%= "Current rating is: #{@rating.vote}" %>
+      <%= link_to 'Edit Rating', edit_rating_path(@rating),
+          class: "myButton" %>
+    <% end %>
   <% end %>
 </div>

@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141207013713) do
+ActiveRecord::Schema.define(version: 20141223065745) do
+
+  create_table "checklists", force: true do |t|
+    t.text     "description"
+    t.integer  "order"
+    t.string   "recipe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "checklists", ["recipe_id"], name: "index_checklists_on_recipe_id"
 
   create_table "comments", force: true do |t|
     t.string   "text"
@@ -81,6 +91,7 @@ ActiveRecord::Schema.define(version: 20141207013713) do
     t.float    "rating"
   end
 
+  add_index "recipes", ["name", "user_id"], name: "index_recipes_on_name_and_user_id", unique: true
   add_index "recipes", ["user_id"], name: "index_recipes_on_user_id"
 
   create_table "users", force: true do |t|
@@ -92,6 +103,14 @@ ActiveRecord::Schema.define(version: 20141207013713) do
     t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest"
+    t.string   "remember_digest"
+    t.string   "activation_digest"
+    t.string   "string"
+    t.string   "reset_digest"
+    t.boolean  "activated"
+    t.boolean  "admin"
+    t.datetime "reset_sent_at"
   end
 
 end
