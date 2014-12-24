@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "juniorprojectrails@gmail.com"
+  default from: "no-reply@vast-stream-5760.herokuapp.com"
   ##############################################################################
   # Generates an activation email link that will be used to activate the users
   # account after registration.
