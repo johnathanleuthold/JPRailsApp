@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  default from: "juniorprojectrails@gmail.com"
   ##############################################################################
   # Generates an activation email link that will be used to activate the users
   # account after registration.
