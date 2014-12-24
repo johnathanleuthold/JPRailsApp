@@ -6,6 +6,7 @@
 #go into a recipe including the type of ingredient, measurement and quantity.
 ################################################################################
 class RecipeIngredientsController < ApplicationController
+  include RecipeIngredientsHelper
   
   ##############################################################################
   # Builds new recipe ingredient for the current recipe

@@ -5,6 +5,7 @@
 #############################################################################-->
 <!-- Recipe name as header -->
 <h1><%= @recipe.name %></h1>
+<h2>Recipe Ingredients</h2>
 <!-- Display recipe ingredients in table -->
 <div class="ingredients">
   <table>
@@ -20,7 +21,8 @@
     <%= link_to 'Add Ingredient', new_recipe_ingredient_path, 
         class: "myButton" if current_user?(@recipe.user) %>
 </div>
-<br />
+<hr />
+<h2>Checklist Items</h2>
  <!-- Display all checklist items -->
  <div class="checklists">
   <table>
@@ -34,7 +36,8 @@
       class: "myButton" if current_user?(@recipe.user) %>
   
 </div>
-<br />
+<hr />
+<h2>Comments</h2>
 <!-- Display all recipe comments. Newest comments display first -->
 <div class="comments">
   <%= render @recipe.comments %>
@@ -42,7 +45,8 @@
   <%= link_to 'Add Comment', new_comment_path, 
       class: "myButton" if logged_in? %>
 </div>
-<br />
+<hr />
+<h2>Your Rating</h2>
 <!-- Allow logged in users to rate recipe -->
 <div class="rating">
   <% if logged_in? %>

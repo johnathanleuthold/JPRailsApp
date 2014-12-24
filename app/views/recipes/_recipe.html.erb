@@ -4,7 +4,7 @@
 <p>
   <%= recipe.user.username %>
   <%= link_to recipe.name, recipe, class: "recipe_entry" %>
-  <%= "Average user rating: #{recipe.rating}" %>
+  <%= "Average user rating: #{recipe.rating}" if !recipe.rating.nil? %>
 </p>
 <!-- Show modificaiton links -->
 <%= render 'shared/mod_links', object: recipe %>

@@ -1,6 +1,7 @@
-<!-- Displays a sing recipe ingredient -->
+<!-- Displays a single recipe ingredient -->
 <tr>
-  <td><%= recipe_ingredient.quantity %></td>
+  <!-- Uses RecipeIngredientsHelper to display quantity as a fraction -->
+  <td><%= fractionalize(recipe_ingredient) %></td>
   <td><%= recipe_ingredient.measurement.abbr %></td>
   <td><%= recipe_ingredient.ingredient.name %></td>
   <td><%= recipe_ingredient.text %></td>

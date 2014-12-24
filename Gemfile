@@ -33,7 +33,7 @@ gem 'spring',        group: :development
 gem 'bcrypt'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
+gem 'fraction'
 # Use unicorn as the app server
 # gem 'unicorn'
 
