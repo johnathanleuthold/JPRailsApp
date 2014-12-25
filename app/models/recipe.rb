@@ -7,7 +7,25 @@ class Recipe < ActiveRecord::Base
   has_many :ratings, dependent: :destroy
   has_many :checklists, dependent: :destroy
   
+  #Show recipes in order of user_id and rating
+  default_scope -> { order(user_id: :asc, rating: :desc) }
+  
+  #Add picture uploader
+  mount_uploader :picture, PictureUploader
+  
+  #Recipe names are unique per user
   validates_uniqueness_of :name, scope: :user, on: :create
   
-  default_scope -> { order(user_id: :asc, rating: :desc) }
+  #Ensure picture is under 5MB
+  validate :picture_size
+  
+#PRIVATE########################################################################
+private
+
+  # Validates the size of an uploaded picture.
+  def picture_size
+    if picture.size > 5.megabytes
+      errors.add(:picture, "should be less than 5MB")
+    end
+  end
 end

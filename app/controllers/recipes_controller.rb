@@ -126,6 +126,6 @@ class RecipesController < ApplicationController
     # Allows only permitted parameters to be submitted and used on the pages
     ############################################################################
     def recipe_params
-      params.require(:recipe).permit(:name)
+      params.require(:recipe).permit(:name, :picture)
     end
 end

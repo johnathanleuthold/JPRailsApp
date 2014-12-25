@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223065745) do
+ActiveRecord::Schema.define(version: 20141224223408) do
 
   create_table "checklists", force: true do |t|
     t.text     "description"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20141223065745) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.float    "rating"
+    t.string   "picture"
   end
 
   add_index "recipes", ["name", "user_id"], name: "index_recipes_on_name_and_user_id", unique: true

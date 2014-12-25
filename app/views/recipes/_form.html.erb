@@ -1,14 +1,25 @@
 <!-- Form for editing and new recipes -->
 <div class="recipe_entry">
-  <%= form_for @recipe do |f| %>
+  <!-- Includes multipart for file uploading -->
+  <%= form_for(@recipe, html: { multipart: true }) do |f| %>
     <p>
       <!-- Adds name to page hash -->
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, placeholder: :name %>
     </p>
     <p>
       <!-- Creates/Updates user recipe -->
       <%= f.submit @btnText, class: "myButton" %>
     </p>
+    <span class="picture">
+      <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+    </span>
   <% end %>
+  <script type="text/javascript">
+    $('#recipe_picture').bind('change', function() {
+      size_in_megabytes = this.files[0].size/1024/1024;
+      if(size_in_megabytes > 5) {
+        alert('Maximum file size is 5MB.  Please choose a smaller file');
+      }
+    });
+  </script>
 </div>
