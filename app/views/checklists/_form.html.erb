@@ -9,6 +9,19 @@
     <!-- Adds order to page hash -->
     <%= f.number_field :order, placeholder: 'Order' %>
   </p>
+  <% if @images.any? %>
+    <p>
+      <h2>Current Images</h2>
+      <% @images.each do |i| %>
+        <%= image_tag i.picture.url %>
+      <% end %>
+    </p>
+  <% end %>
+  <% if controller.action_name != 'new' %>
+  <p>
+    <%= link_to 'Add Image', new_checklist_picture_path(@checklist) %>
+  </p>
+  <% end %>
   <!-- Creates/Edits checklist item -->
   <p>
     <%= f.submit @btnText, class: "myButton" %>

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :comments,            except: [:show]
   resources :ratings,             except: [:show]
   resources :checklists,          except: [:show]
+  resources :checklist_pictures,  except: [:show]
   resources :account_activations, only:   [:edit]
   resources :password_resets,     only:   [:new, :create, :edit, :update]
   

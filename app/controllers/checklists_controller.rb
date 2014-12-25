@@ -2,8 +2,8 @@
 #Author: Chad Greene
 #Date: 12-13-14
 #Modifications: 
-#Description: The Checklists controller allows users to post 1 or many checklists
-#to an individual recipes.
+#Description: The Checklists controller allows users to post 1 or many 
+# checklist items to an individual recipe.
 ################################################################################
 class ChecklistsController < ApplicationController
   
@@ -19,6 +19,7 @@ class ChecklistsController < ApplicationController
     @checklist = current_recipe.checklists.build
     @btnText = "Create Checklist Item"
     @obj = @checklist
+    @images = @checklist.checklist_pictures.all
     render 'shared/form'
   end
   
@@ -55,6 +56,7 @@ class ChecklistsController < ApplicationController
     @checklist = current_recipe.checklists.find(params[:id])
     @btnText = "Update Checklist Item"
     @obj = @checklist
+    @images = @checklist.checklist_pictures.all
     render 'shared/form'
   end
 
@@ -68,7 +70,7 @@ class ChecklistsController < ApplicationController
   ##############################################################################
   def update
     @checklist = current_recipe.checklists.find(params[:id])
-    @obj = @checlist
+    @obj = @checklist
     if(@checklist.update(checklist_params))
       redirect_back_or current_recipe
     else

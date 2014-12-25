@@ -62,8 +62,8 @@ before_action :logged_in_user, except: [:new, :create, :show]
   end
   
   ##############################################################################
-  # Callback for controllers with @user object.  Used for checking whether or 
-  # not the logged in user owns an object or administrator within the views.
+  # Used for checking whether or not the logged in user owns an object 
+  # or if user is an administrator within the views.
   ##############################################################################
   def correct_user(user)
       redirect_to(root_url) unless (admin || current_user?(user))
