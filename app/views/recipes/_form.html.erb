@@ -6,13 +6,14 @@
       <!-- Adds name to page hash -->
       <%= f.text_field :name, placeholder: :name %>
     </p>
+    <h2>Add Image</h2>
+    <span class="picture">
+      <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+    </span>
     <p>
       <!-- Creates/Updates user recipe -->
       <%= f.submit @btnText, class: "myButton" %>
     </p>
-    <span class="picture">
-      <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
-    </span>
   <% end %>
   <script type="text/javascript">
     $('#recipe_picture').bind('change', function() {
