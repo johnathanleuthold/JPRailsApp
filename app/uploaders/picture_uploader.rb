@@ -9,7 +9,7 @@ class PictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   
   #Resize file before saving
-  process resize_to_limit: [200,200]
+  process resize_to_limit: [150, 150]
   
   # Choose what kind of storage to use for this uploader:
   #Sets fog for cloud storage of pictures using AWS S3
