@@ -78,7 +78,9 @@ module SessionsHelper
   #  Exit: returns true if current_user is admin
   ##############################################################################
   def admin
-    current_user.admin?
+    if(session[:user_id])
+      current_user.admin?
+    end
   end
   
   ##############################################################################

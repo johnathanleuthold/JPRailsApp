@@ -2,12 +2,13 @@
 # Adds edit link if object is owned by current user.  Used specifically for 
 # resources not directly belonging to user.
 #############################################################################-->
-
-<%= link_to 'edit', 
-    edit_polymorphic_path(object) if current_user?(current_recipe.user) %>
-    
-<!-- Adds delete link if object is owned by current user or admin user -->
-<% if admin || current_user?(current_recipe.user) %>            
-  <%= link_to 'delete', object, method: :delete, 
-                        data: { confirm: "Are you sure?"} %>
+<% if logged_in? %>
+  <%= link_to 'edit', 
+      edit_polymorphic_path(object) if current_user?(current_recipe.user) %>
+      
+  <!-- Adds delete link if object is owned by current user or admin user -->
+  <% if admin || current_user?(current_recipe.user) %>            
+    <%= link_to 'delete', object, method: :delete, 
+                          data: { confirm: "Are you sure?"} %>
+  <% end %>
 <% end %>
