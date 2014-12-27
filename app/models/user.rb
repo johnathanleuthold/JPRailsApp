@@ -38,8 +38,10 @@ class User < ActiveRecord::Base
   EMAIL_REGEX = /\A[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Za-z]{2,20}\z/i
   
     #Validations
-  validates :username, presence: true, uniqueness: true, length: 3..25
-  validates :email, presence: true, uniqueness: true, format: EMAIL_REGEX
+  validates :username, presence: true, uniqueness: {case_sensitive: false }, 
+                       length: 3..25
+  validates :email, presence: true, uniqueness: {case_sensitive: false }, 
+                    length: 6..255, format: EMAIL_REGEX
   validates :password, confirmation: true, length: 6..35, on: [:create]
   validates :password_confirmation, presence: true, on: [:create]
   

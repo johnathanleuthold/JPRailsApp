@@ -8,4 +8,4 @@
   <%= "Average user rating: #{recipe.rating}" if !recipe.rating.nil? %>
 </p>
 <!-- Show modificaiton links -->
-<%= render 'shared/mod_links', object: recipe %>
+<%= render 'shared/mod_links', object: recipe if logged_in? %>

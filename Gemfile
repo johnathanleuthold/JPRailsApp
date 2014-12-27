@@ -5,10 +5,23 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.8'
 # Use mysql as the database for Active Record
 group :development, :test do
-    gem 'sqlite3'
-    gem 'byebug'
+  #Uses sqlite engine 
+  gem 'sqlite3'
+  gem 'byebug'
   gem 'web-console'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
 end
+
+group :test do
+  #modifies color reporting for tests
+  gem 'minitest-reporters'
+  #Shows backtrace on page hashes
+  gem 'mini_backtrace'
+  #Speeds up testing by keeping a live environment running for tests
+  gem 'guard-minitest'
+end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -27,16 +40,18 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
-
 gem 'bcrypt'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+#Adds to_fraction function for ruby float datatypes
 gem 'fraction'
+#Adds uploading capabilities to application
 gem 'carrierwave'
+#Used to manage upload file modifications
 gem 'mini_magick'
+#Used to transfer uploads to filestore
 gem 'fog'
+#Used to ingterface with Amazon Cloud services 
 gem 'aws-sdk'
 
 # Use unicorn as the app server
