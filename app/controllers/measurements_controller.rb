@@ -67,7 +67,7 @@ class MeasurementsController < ApplicationController
   #  Exit: none
   ##############################################################################
   def update
-    @measurment = Measurement.find(params[:id])
+    @measurement = Measurement.find(params[:id])
     @obj = @measurement
     if(@measurement.update(msr_params))
       redirect_to @measurement
