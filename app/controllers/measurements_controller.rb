@@ -113,11 +113,11 @@ class MeasurementsController < ApplicationController
   end
   
 #PRIVATE########################################################################
-  private
-    ############################################################################
-    # Allows only permitted parameters to be submitted and used on the pages
-    ############################################################################  
-    def msr_params
-      params.require(:measurement).permit(:name, :abbr)
-    end
+private
+  ############################################################################
+  # Allows only permitted parameters to be submitted and used on the pages
+  ############################################################################  
+  def msr_params
+    params.require(:measurement).permit(:name, :abbr)
+  end
 end
