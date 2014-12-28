@@ -9,7 +9,7 @@
   Username: <%= user.username %>
 </p>
 <p>
-  <% if admin %>
+  <% if admin  && !user.admin? %>
     <%= link_to "Delete #{user.username}", user, method: :delete,
         data: { confirm: "Are you sure" } %>
   <% end %>
