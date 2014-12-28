@@ -53,7 +53,7 @@ class MeasurementsController < ApplicationController
   ##############################################################################
   def edit
     @page_title = "Edit Measurement"
-    @measurment = Measurement.find(params[:id])
+    @measurement = Measurement.find(params[:id])
     @btnText = "Update Measurement"
     @obj = @measurement
     render 'shared/form'
