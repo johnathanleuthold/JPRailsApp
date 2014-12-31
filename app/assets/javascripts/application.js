@@ -56,7 +56,7 @@ $(document).ready(function(){
                     else
                     {
                         usernameExistsError =  "";
-                        Username.removeClass('errorfield');
+                        //Username.removeClass('errorfield');
                         UsernameExists.hide();
                         //alert("username is available");
                     }
@@ -98,7 +98,7 @@ $(document).ready(function(){
                     else
                     {
                         EmailExistsError =  "";
-                        Email.removeClass('errorfield');
+                        //Email.removeClass('errorfield');
                         EmailExists.hide();
                         //alert("username is available");
                     }
