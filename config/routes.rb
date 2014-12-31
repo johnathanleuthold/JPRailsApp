@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   post   'login'    => 'sessions#create'
   delete 'logout'   => 'sessions#destroy'
   
+  #get route written for ajax call to users controller.
+  get 'users/existinguser' => 'users#existinguser', :as => 'existinguser'
+  get 'users/existingemail' => 'users#existingemail', :as => 'existingemail'
+  
   resources :users do
     member do
       get :following, :followers

@@ -111,6 +111,37 @@ class UsersController < ApplicationController
     end
   end
   
+  ####
+  
+  ####
+  def existinguser
+    @data = request.filtered_parameters
+    @username = @data['username']
+    if (User.exists?(username: @username))
+        @output = "exists"
+      else
+        @output = "free"
+    end
+    render json: @output
+    #respond_to do |format|
+     # format.json {render :json => { :success => "exists", :status_code => "200" }}
+    #end
+  end
+  
+  ####
+  
+  ####
+  def existingemail
+    @data = request.filtered_parameters
+    @email = @data['email']
+    if (User.exists?(email: @email))
+        @output = "exists"
+      else
+        @output = "free"
+    end
+    render json: @output
+  end
+  
   ##############################################################################
   # Deletes a user record from the database
   #

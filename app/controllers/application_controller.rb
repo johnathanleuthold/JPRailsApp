@@ -21,10 +21,10 @@ protect_from_forgery with: :exception
 include SessionsHelper
 
   # Sets ActionMailer::Base
-before_action :make_action_mailer_user_request_host_and_protocol
+before_action :make_action_mailer_user_request_host_and_protocol, except: [:existinguser, :existingemail]
 
   #ensures the user is logged in to access protected content
-before_action :logged_in_user, except: [:new, :create, :show]  
+before_action :logged_in_user, except: [:new, :create, :show, :existinguser, :existingemail]  
   
   ##############################################################################
   # Saves the url request of a user that is not logged in.  Upon a successful

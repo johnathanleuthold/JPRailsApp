@@ -5,11 +5,15 @@
       <!-- Adds username to page hash -->
       <%= f.text_field :username, class:"inputs", 
             :placeholder => "Username" %> 
+      <span id = "username_exists"></span>
+      <span id ="username_error"></span>
     </p>
     <p> 
       <!-- Adds email to page hash -->
-      <%= f.text_field :email, class:"inputs", 
+      <%= f.text_field :email, class:"inputs",
             :placeholder => "Email" %> 
+      <span id = "email_exists"></span>
+      <span id ="email_error"></span>
     </p>
     <p> 
       <!-- Adds first name to page hash -->
@@ -25,11 +29,13 @@
       <!-- Adds password_hash to page hash -->
       <%= f.password_field :password, class:"inputs", 
             :placeholder => "Password" %>
+      <span id ="password_error"></span>
     </p>
     <p> 
       <!-- Adds pw_confirmation_hash to page hash -->
       <%= f.password_field :password_confirmation, class:"inputs", 
-            :placeholder => "Re-Enter Password"%> 
+            :placeholder => "Re-Enter Password"%>
+      <span id ="password_confirmation_error"></span>
     </p>
     <p>
       <!-- Creates/Updates user object -->
